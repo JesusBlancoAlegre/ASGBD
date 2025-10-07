@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.Scanner;
+
+
+public class LecturaScanner {
+   public static void main(String[] args) {
+       File file = new File("productos.txt");
+
+
+       if (!file.exists()) {
+           System.out.println("El archivo productos.txt no existe.");
+           return;
+       }
+
+
+       System.out.println("El archivo ocupa " + file.length() + " bytes.");
+
+
+       int contadorArticulos = 0;
+       double sumaPrecios = 0.0;
+       double importeTotal = 0.0;
+
+
+       try (Scanner sc = new Scanner(file)) {
+           while (sc.hasNextLine()) {
+               String linea = sc.nextLine();
+               String[] partes = linea.split(";");
+
+
+               String categoria = partes[0];
+               String nombre = partes[1];
+               double precio = Double.parseDouble(partes[2]);
+               int stock = Integer.parseInt(partes[3]);
+
+
+               // Formatear precio con coma
+               String precioFormateado = String.format("%.2f", precio).replace('.', ',');
+
+
+               // Mostrar línea en consola
+               System.out.printf("%s (%s) -- Precio: %s € -- Stock: %d%n",
+                       nombre, categoria, precioFormateado, stock);
+
+
+               // Sumar para cálculos finales
+               contadorArticulos++;
+               sumaPrecios += precio;
+               importeTotal += precio * stock;
+           }
+       } catch (FileNotFoundException e) {
+           System.out.println("No se pudo leer el archivo.");
+       }
+
+
+       // Mostrar estadísticas finales
+       System.out.println("\nNúmero total de artículos: " + contadorArticulos);
+       double promedioPrecios = contadorArticulos > 0 ? sumaPrecios / contadorArticulos : 0;
+       System.out.printf("Promedio de precios: %.2f €%n", promedioPrecios);
+       System.out.printf("Importe total (precio * stock): %.2f €%n", importeTotal);
+   }
+}
