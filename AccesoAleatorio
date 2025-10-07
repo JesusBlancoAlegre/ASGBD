@@ -1,0 +1,24 @@
+import java.io.*;
+
+public class AccesoAleatorio {
+    public static void main(String[] args) {
+        try {
+            RandomAccessFile raf = new RandomAccessFile("datos.txt", "r");
+
+            // Probar con distintos valores
+            long[] posiciones = {0, 10, 15, 30};
+
+            for (long posicion : posiciones) {
+                raf.seek(posicion);
+                System.out.println("Lectura desde byte " + posicion + ":");
+                String linea = raf.readLine();
+                System.out.println("> " + linea);
+                System.out.println("---------------------");
+            }
+
+            raf.close();
+        } catch (IOException e) {
+            System.out.println("Error en acceso aleatorio: " + e.getMessage());
+        }
+    }
+}
