@@ -1,0 +1,17 @@
+import java.io.File;
+public class RutaRelativa {
+    public static void main(String[] args) {
+        String rutaBase = System.getProperty("user.dir");
+        String separador = File.separator;
+        String rutaRelativa = rutaBase + separador + "datos" +
+                separador + "ejemplo.txt";
+        File archivo = new File(rutaRelativa);
+        System.out.println("Ruta base del proyecto: " + rutaBase);
+        System.out.println("Separador de carpetas del sistema: " +
+                separador);
+        System.out.println("Ruta relativa completa: " + rutaRelativa);
+        System.out.println("¿Existe el archivo? " + archivo.exists());
+        System.out.println("Ruta absoluta real: " +
+                archivo.getAbsolutePath());
+    }
+}
